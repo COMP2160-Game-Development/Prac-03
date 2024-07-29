@@ -1,0 +1,45 @@
+{
+    "name": "PlayerActions",
+    "maps": [
+        {
+            "name": "movement",
+            "id": "aa6f5327-1b36-412d-af6e-1c4b164c9671",
+            "actions": [
+                {
+                    "name": "jump",
+                    "type": "Button",
+                    "id": "18e4cbf8-2421-4918-bb1e-ac11e6dc365f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "037ed690-a400-431f-9ca4-f492a64bbc7f",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "33e4b1ee-f9f7-47a2-bcfc-054e60759441",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
