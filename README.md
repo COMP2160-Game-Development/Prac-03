@@ -1,24 +1,25 @@
 # COMP2160 Prac 03: Endless Runner
 
 ## Topics covered:
-* Discussion: Crunch and Sustainability
+* Handling multiple inputs
 * Prefab instantiation, destruction
 * Finite State Machines
-* Collision with Trigger Colliders
+* Trigger Collision
 
-## Discussion:
-You are working as a programmer on your major project for COMP3150 with a team of three other students. It is week 12, the start of the final sprint for the unit. Your game is a top-down, two-player zombie shooter. At the beginning of semester, you pitched a vertical slice with three kinds of zombies and four different weapon pickups. At the end of your last milestone, you only had a single zombie working and two weapon types. Your creative lead is convinced that you can complete the game as promised and wants the team to work extra hours to finish it. What do you do?
+>## Discussion: Crunch & Sustainability (15 min)
+>You are working as a programmer on your major project for COMP3150 with a team of three other students. It is week 12, the start of the final sprint for the unit. Your game is a top-down, two-player zombie shooter. At the beginning of semester, you pitched a vertical slice with three kinds of zombies and four different weapon pickups. At the end of your last milestone, you only had a single zombie working and two weapon types. Your creative lead is convinced that you can complete the game as promised and wants the team to work extra hours to finish it. What do you do?
 
 ## Today's Task
-
-In this prac you will implement an endless runner game: 
-https://uncanny-machines.itch.io/comp2160-week-03-prac
+In this prac you will implement an endless runner game: https://uncanny-machines.itch.io/comp2160-week-03-prac
  
 The player controls the purple square using the space key to jump over the triangles (or die!)
 
 ![An image of the complete game, with a happy little square jumping over triangles. Well, we assume the square to be happy.](images/Week3_1.png)
 
-## Step 1 – Simple jumps
+## Step 1 - Input (15 min)
+// TODO
+
+## Step 2 – Simple jumps (15 min)
 First we need to implement a jumping mechanic using a state machine. We will start with simple behaviour: the jump starts when you first press the button, and ends when you hit the ground. 
 
 So, we have two states:
@@ -124,7 +125,7 @@ You may also want to "save" your values like we did in Week 2 by entering some d
 
 ## Checkpoint! Save, commit and push your work now.
 
-## Step 2 – Spawning triangles
+## Step 3 – Spawning triangles (15 min)
 We’re going to fake the ‘running’ part of the game by keeping the player in one position and firing triangles at it. This means we don’t have to worry about the player getting further and further away from zero. Working near (0,0,0) in world coordinates gives us the best floating-point resolution for calculations, and is common in games of this type.
 
 Create an empty game object named "Obstacle" and add the triangle sprite to it, then turn it into a prefab. You can find the triangle sprite, along with a few other shapes, in the Sprites folder. As with the player, it will be helpful if the pivot is at the bottom of the triangle.
@@ -162,7 +163,7 @@ Following the timer pattern introduced in Week 1, add a timer that triggers the 
 
 ### Checkpoint! Save, commit and push your work now.
 
-## Step 3 – Handling collisions
+## Step 4 – Handling collisions (15 min)
 We now want something to happen when our player hits an obstacle!
 
 We’re going to use Triggers to detect collisions. Trigger colliders are used to detect collisions when you don’t need to simulate the physics of the collision. In this case, we just need to know when the player touches an obstacle, so we don’t want to use the physics engine to simulate the outcome.
@@ -207,14 +208,7 @@ void OnTriggerEnter2D (Collider2D collider)
 
 ### Checkpoint! Save, commit and push your work now.
 
-### To receive half marks, show your tutor:
-* Your state machine that controls the player's jumping.
-* Your tunable parameters in the inspector.
-* Your obstacle spawner.
-* Your obstacle destroyer.
-
-
-## Step 4 – More complex jumps
+## Step 5 – More complex jumps (30 min)
 
 The jump we've created is very "floaty"! Let's add some nuance to our state machine to make the jump feel better. These jumps can be a little bit tricky to implement. As we move throug the three extra states we are going to add, try working them out on pen-and-paper. Always keep paper and a pen next to you when programming. Sketching things out on paper before writing code will help a LOT.
 
