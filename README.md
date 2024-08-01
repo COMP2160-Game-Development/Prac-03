@@ -1,44 +1,32 @@
 # COMP2160 Prac 03: Endless Runner
 
 ## Topics covered:
-<<<<<<< Updated upstream
-* Handling multiple inputs
-=======
 * Discussion: UN SDGs and Game Development
->>>>>>> Stashed changes
 * Prefab instantiation, destruction
 * Finite State Machines
-* Trigger Collision
+* Collision with Trigger Colliders
 
-<<<<<<< Updated upstream
->## Discussion: Crunch & Sustainability (15 min)
->You are working as a programmer on your major project for COMP3150 with a team of three other students. It is week 12, the start of the final sprint for the unit. Your game is a top-down, two-player zombie shooter. At the beginning of semester, you pitched a vertical slice with three kinds of zombies and four different weapon pickups. At the end of your last milestone, you only had a single zombie working and two weapon types. Your creative lead is convinced that you can complete the game as promised and wants the team to work extra hours to finish it. What do you do?
-=======
-## Discussion: UN Sustainability Goals (15 min)
-Your demonstrator will assign your group one of the [17 UN Sustainability Goals](https://sdgs.un.org/goals). In your group, you must:
-* Brainstorm and discuss how this goal is relevant to game development, be it a contribution to achieving these goals, or a determient to it (e.g., how does consumption of hardware for game dev impact goal 12?).
-* Find a journalistic (such as a news article) or industry source (such as a press release or dev blog) that offers an example relevant to the games industry and your assigned goal.
-* Share with the class!
-
-![An image of the 17 SDGs from the UN.](images/Week3_SDGs.png)
->>>>>>> Stashed changes
+> ## Discussion: UN Sustainability Goals (15 min)
+> Your demonstrator will assign your group one of the [17 UN Sustainability Goals](https://sdgs.un.org/goals). In your group, you must:
+> - Brainstorm and discuss how this goal is relevant to game development, be it a contribution to achieving these goals, or a determient to it (e.g., how does consumption of hardware for game dev impact goal 12?).<br><br>
+> - Find a journalistic (such as a news article) or industry source (such as a press release or dev blog) that offers an example relevant to the games industry and your assigned goal.<br><br>
+> - Share with the class!
 
 ## Today's Task
-In this prac you will implement an endless runner game: https://uncanny-machines.itch.io/comp2160-week-03-prac
+
+In this prac you will implement an endless runner game: 
+https://uncanny-machines.itch.io/comp2160-week-03-prac
  
 The player controls the purple square using the space key on a keyboard, or the South button on a gamepad, to jump over the triangles (or die!)
 
 ![An image of the complete game, with a happy little square jumping over triangles. Well, we assume the square to be happy.](images/Week3_1.png)
 
-## Step 1 - Input (15 min)
-// TODO
+## Step 1 – Simple jumps (15 min)
+First we need to implement a jumping mechanic using a state machine. We will start with simple behaviour: the jump starts when you first press the button, and ends when you hit the ground. Get out your notebook and start drawing out your state machine as we go.
 
-## Step 2 – Simple jumps (15 min)
-First we need to implement a jumping mechanic using a state machine. We will start with simple behaviour: the jump starts when you first press the button, and ends when you hit the ground. 
-
-So, we have two states:
-* The player starts in the On Ground state and stays in this state until the jump button is pressed. 
-* At that point they enter the Jumping state and start moving upwards with a specified jumping velocity. Gravity is applied for each frame while they are jumping, eventually making the velocity negative, so that they return to the ground (i.e. height = 0). At this point, they return to the On Ground state.
+We start with two states:
+* The player starts in the `OnGround` state and stays in this state until the jump button is pressed. 
+* When the jump button is pressed,  they enter the `Jumping` state and start moving upwards with a specified jumping velocity. Gravity is applied for each frame while they are jumping, eventually making the velocity negative, so that they return to the ground (i.e. height = 0). At this point, they return to the `OnGround` state.
 
 ![A diagram of a Finite State Machine with two states: OnGround and Jump.](images/Week3_2.png)
 
@@ -46,11 +34,11 @@ The project already has a scene containing the ground and the player sprite (bot
 
  ![A screenshot of the scene, with a purple square representing the player and a black rectangle representing the ground.](images/Week3_3.png)
 
-Notice that the sprite is set-up so that its pivot is at the bottom instead of the centre. This is the point we will use to measure the height of the sprite above the ground, and the calculation is simpler if we measure from this point. Moving the pivot is achieved by making the Player object an empty object and the sprite as a child of this object, with Y offset of 0.5.
+Notice that the sprite is set-up so that its pivot is at the bottom instead of the centre. This is the point we will use to measure the height of the sprite above the ground, and the calculation is simpler if we measure from this point. Moving the pivot is achieved by making the Player object an empty object and the sprite as a child of this object, with Y offset of 0.5. If you are not sure how this works, take a minute to examine the object in the heirarchy. Remember our discussion of coordinate frames from last week.
 
 ![A screenshot of the player object up close, showing its pivot point at its feet](images/Week3_4.png)
  
-For simplicity's sake, the Input for this project has already been set-up. Jump is currently set to SpaceBar (And West Button on GamePad), but you are free to change this if you wish. This has been established in the Jump.cs script provided with the project.
+For simplicity's sake, the Input for this project has already been set-up. Jump is currently set to SpaceBar.
 
 In the provided Jump script, follow the FSM pattern described in lectures to create a jumpState enumeration with two values: OnGround and Jumping.
 
@@ -92,10 +80,9 @@ jumpState = JumpState.OnGround;
 
 Then, there are two things we need to add to our OnGround state: we need to set the speed variable, and figure out how to transition from OnGround to Jumping. We'll let you take care of the former. 
 
-For handling the jumping itself, we need to decide if we want to take an event-driven or polling approach to handling inputs here. There is no exact right answer, but generally speaking, if we are using explicit state machines we want to handle our transitions inside of them as much as possible. An event-driven approach would necessitate, well, events. So, we're going to use polling here.
+For jumping itself, we need to decide if we want to take an event-driven or polling approach to handling inputs here. There is no exact right answer, but generally speaking, if we are using explicit state machines we want to handle our transitions inside of them as much as possible. An event-driven approach would necessitate, well, events. So, we're going to use polling here.
 
-There are a couple of ways 
-Luckily, Button inputs in Unity can be read as values. Much like we did with our movement in Prac 2, we can simply read the value of the button (returning a float of either 0 for not pressed or 1 for pressed). We will then use this info to transition into the Jumping state, setting any values we need to along the way:
+Button inputs in Unity can be read as values. Much like we did with our movement in Prac 2, we can simply read the value of the button (returning a float of either 0 for not pressed or 1 for pressed). We will then use this info to transition into the Jumping state, setting any values we need to along the way:
 
 ```
 case JumpState.OnGround:
@@ -135,18 +122,25 @@ Once you've got a good jump, you should have a bit of an idea as to what the min
 [Range(0,10)] [SerializeField] private float jumpSpeed;
 [Range(0,10)] [SerializeField] private float gravity;
 ```
-You may also want to "save" your values like we did in Week 2 by entering some default values into the script.
+### Adding a gamepad
+Spacebars are cool and all, but gamepads are where it's at. You will be provided a gamepad by your demonstrator (ask for one if not). Plug it into your computer, then edit your InputActionsAsset to have Gamepad support. First, open the InputActionsAsset and select the Jump Action. Then, press the "+" symbol to the right and select "Add Binding". This will allow you to add an additional binding to this action.
+
+![](images/Week3_inputmapping1.png)
+
+Once the binding is added, set it to the South Button on the Gamepad (or something else) by navigating to **Gamepad > South Button**. Make sure the asset is saved, and test this out. Having multiple inputs is often good for accessibility, and allows you to target other platforms.
+
+![](images/Week3_inputmapping2.png)
 
 ## Checkpoint! Save, commit and push your work now.
 
-## Step 3 – Spawning triangles (15 min)
+## Step 2 – Spawning triangles (20 min)
 We’re going to fake the ‘running’ part of the game by keeping the player in one position and firing triangles at it. This means we don’t have to worry about the player getting further and further away from zero. Working near (0,0,0) in world coordinates gives us the best floating-point resolution for calculations, and is common in games of this type.
 
-Create an empty game object named "Obstacle" and add the triangle sprite to it, then turn it into a prefab. You can find the triangle sprite, along with a few other shapes, in the Sprites folder. As with the player, it will be helpful if the pivot is at the bottom of the triangle.
+Create an empty game object named "Obstacle" and add the triangle sprite to it. Turn it into a prefab. You can find the triangle sprite, along with a few other shapes, in the Sprites folder. As with the player, it will be helpful if the pivot is at the bottom of the triangle.
 
-When selecting the colour of the Obstacle, you want to make sure it nicely contrasts with the player and the background, so that all three elements stand as seperate from one another. I like to use [David Nichol's Coloring for Colorblindness](https://davidmathlogic.com/colorblind/) to pick palettes that are as accessible as possible.
+When selecting the colour of the Obstacle, you want to make sure it nicely contrasts with the player and the background, so that all three elements stand as seperate from one another. I like to use [David Nichol's Coloring for Colorblindness](https://davidmathlogic.com/colorblind/) to pick palettes that are as accessible.
 
-Write a script that moves the obstacle to the left at a constant speed. I am calling mine "Obstacle", and this name will be used in some of the below examples. Add this to the prefab.
+Write a script that moves the obstacle to the left at a constant speed. I am calling mine "Obstacle", and this name will be used in the below examples. Add this to the prefab.
 
 Make an empty Spawner object, sitting just outside the camera view on the right-hand side, with a y position of 0. This is where we will spawn the Obstacles:
 
@@ -157,7 +151,7 @@ We want to instantiate a new Obstacle every few seconds, with some randomness be
 ```
 [SerializeField] private Obstacle obstacle;
 ```
-We want to use a new method to spawn our Obstacle. Create a new Method in our Spawner script ("Spawn" is a good name) and add code to Instantiate the obstacle prefab. As we want to manipulate it after spawning it, we need to be sure to give it a name like "newObstacle":
+We need a function for spawning Obstacles. Create a new function in our Spawner script ("Spawn" is a good name) and add code to Instantiate the obstacle prefab. As we want to manipulate it after spawning it, we need to be sure to give it a name like "newObstacle":
 
 ```
 Obstacle newObstacle = Instantiate(obstacle);
@@ -170,14 +164,39 @@ We then want to ensure the following:
 
 There's a couple of ways to achieve this. Have a look at the [Unity Documentation for Instantiate()](https://docs.unity3d.com/ScriptReference/Object.Instantiate.html) to get some ideas. Is it better to do this as a single method call, or through multiple lines of code? What might be some tradeoffs? Hint: if you don't want to mess with rotation, setting it to [Quaternion.identity](https://docs.unity3d.com/ScriptReference/Quaternion-identity.html) is a pretty good idea).
 
-If you are having trouble figuring out what everything does, that's ok. Call over your tutor.
+If you are having trouble figuring out what everything does, that's ok. Call over your demonstrator.
 
 ### Timely triangles
-Following the timer pattern introduced in Week 1, add a timer that triggers the Spawn() method. For a bit more modulation, use ```RandomRange()``` to have the time between spawns vary. Make the min and max timers paramters that can be tuned in the Inspector.
+We want our triangles to spawn regularly over the game, with a set interval between each one.
+
+To achieve this spawning, we need to add a few variables. First, declare a paramater to set the time delay between triangle spawns. You'll also want a private timer variable which will count down between triangle spawns:
+
+```
+[SerializeField] private float timeDelay;
+private float timer;
+```
+
+We will use `Time.deltaTime` to reduce our timer every frame, then spawn a triangle and set it back to `timeDelay` when it hits zero.
+
+First, we want to set our `timer` to whatever value `timeDelay` is. What method does this go in?
+
+```
+timer = timeDelay;
+```
+
+Your job is to now implement the next few steps in code. Call over your demonstrator if you get stuck:
+
+* In our Update method, we reduce `timer` by Time.deltaTime at the beginning of each frame. Try this yourself, and don't forget to print it to the console to check what you are doing is correct.
+
+* Then, we want to call our `Spawn()` method once the timer reaches zero. How might you use an if statement in your `Update()` method to achieve this?
+
+* The last step is to add code into our `Spawn()` method so the timer resets when it hits zero.
+
+> Optional: <br>For a bit more modulation, use ```RandomRange()``` to have the time between spawns vary. Make the min and max timers paramaters that can be tuned in the Inspector.
 
 ### Checkpoint! Save, commit and push your work now.
 
-## Step 4 – Handling collisions (15 min)
+## Step 3 – Handling collisions (20 min)
 We now want something to happen when our player hits an obstacle!
 
 We’re going to use Triggers to detect collisions. Trigger colliders are used to detect collisions when you don’t need to simulate the physics of the collision. In this case, we just need to know when the player touches an obstacle, so we don’t want to use the physics engine to simulate the outcome.
@@ -186,16 +205,16 @@ Add appropriate Collider2D components to both the Player and Obstacle prefabs. M
 
 ![An image of a BoxCollider2D in the inspector, with the "Is Trigger" ticked.](images/Week3_6.png)
 
-A common misconception is that if we aren't using the physics engine to simulate movement, we don't need rigidbodies. However, even when moving an object just with code, we still want them to have rigidbodies, as this tells Unity these things move. Collisions are not guarantteed to be correctly calculated otherwise. So, we need to add a Rigidbody2D component both to the Player and the Obstacle prefab. 
+Whenever we move an object, we want it to have a rigidbody, as this tells Unity that these things move. Collisions are not guarantteed to be correctly calculated otherwise. Add Rigidbody2D components to both the Player and Obstacle prefabs.
 
 By default, rigidbodies have Dynamic Body Types, which means that they are controlled by the Unity physics engine. As we will control the objects directly using Transform, we want to instead set the Body Type to Kinematic:
 
 ![An image of a Rigidbody2D in the inspector, set to Kinematic.](images/Week3_7.png) 
 
-Kinematic rigidbodies detect collisions but leave it up to the programmer to decides what happens (if anything).
+Kinematic rigidbodies detect collisions but leave it up to the programmer to decides what happens.
 
 ### Destroying the player
-When colliding with a 2D trigger collider, the OnTriggerEnter2D event is sent to all of its MonoBehaviours. We can use this to destroy the Player when they collide with an Obstacle. Add the following to your Jump script:
+When colliding with a 2D trigger collider, the `OnTriggerEnter2D()` event is sent to all of its MonoBehaviours. We can use this to destroy the Player when they collide with an Obstacle. Add the following to your Jump script:
 
 ```
 void OnTriggerEnter2D(Collider2D collider)
@@ -222,11 +241,7 @@ void OnTriggerEnter2D (Collider2D collider)
 
 ### Checkpoint! Save, commit and push your work now.
 
-<<<<<<< Updated upstream
-## Step 5 – More complex jumps (30 min)
-=======
-## Step 4 – More complex jumps
->>>>>>> Stashed changes
+## Step 4 – More complex jumps (30 min)
 
 The jump we've created is very "floaty"! Let's add some nuance to our state machine to make the jump feel better. These jumps can be a little bit tricky to implement. As we move throug the three extra states we are going to add, try working them out on pen-and-paper. Always keep paper and a pen next to you when programming. Sketching things out on paper before writing code will help a LOT.
 
@@ -260,4 +275,4 @@ Let's vary the size of the obstacles to challenge the player. When a new obstacl
 * Your completed state machine, including your diagram/notes!
 * Your tunable parameters in the inspector, and the kind of jump feeling you were going for (you don't need to have achieved this, just made a start!).
 * Your spawner and destroyer.
-* Your randomised triangle sizes or movement speeds.
+* Your randomised triangle sizes or movement speeds.    
