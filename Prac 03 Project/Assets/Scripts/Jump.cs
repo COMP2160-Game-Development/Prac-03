@@ -5,19 +5,21 @@ using UnityEngine.InputSystem;
 
 public class Jump : MonoBehaviour
 {
-    // Declare your input variables!
+    PlayerActions playerActions;
+    InputAction jumpAction;
 
     void Awake()
     {
-        // Place relevant input variable instantiations here.
+        playerActions = new PlayerActions();
+        jumpAction = playerActions.Movement.Jump;
     }
     void OnEnable()
     {
-        // What input-related code goes here?
+        jumpAction.Enable();
     }
     void OnDisable()
     {
-        // What input-related code goes here?
+        jumpAction.Disable();
     }
     void Start()
     {
