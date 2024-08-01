@@ -1,18 +1,32 @@
 # COMP2160 Prac 03: Endless Runner
 
 ## Topics covered:
+<<<<<<< Updated upstream
 * Handling multiple inputs
+=======
+* Discussion: UN SDGs and Game Development
+>>>>>>> Stashed changes
 * Prefab instantiation, destruction
 * Finite State Machines
 * Trigger Collision
 
+<<<<<<< Updated upstream
 >## Discussion: Crunch & Sustainability (15 min)
 >You are working as a programmer on your major project for COMP3150 with a team of three other students. It is week 12, the start of the final sprint for the unit. Your game is a top-down, two-player zombie shooter. At the beginning of semester, you pitched a vertical slice with three kinds of zombies and four different weapon pickups. At the end of your last milestone, you only had a single zombie working and two weapon types. Your creative lead is convinced that you can complete the game as promised and wants the team to work extra hours to finish it. What do you do?
+=======
+## Discussion: UN Sustainability Goals (15 min)
+Your demonstrator will assign your group one of the [17 UN Sustainability Goals](https://sdgs.un.org/goals). In your group, you must:
+* Brainstorm and discuss how this goal is relevant to game development, be it a contribution to achieving these goals, or a determient to it (e.g., how does consumption of hardware for game dev impact goal 12?).
+* Find a journalistic (such as a news article) or industry source (such as a press release or dev blog) that offers an example relevant to the games industry and your assigned goal.
+* Share with the class!
+
+![An image of the 17 SDGs from the UN.](images/Week3_SDGs.png)
+>>>>>>> Stashed changes
 
 ## Today's Task
 In this prac you will implement an endless runner game: https://uncanny-machines.itch.io/comp2160-week-03-prac
  
-The player controls the purple square using the space key to jump over the triangles (or die!)
+The player controls the purple square using the space key on a keyboard, or the South button on a gamepad, to jump over the triangles (or die!)
 
 ![An image of the complete game, with a happy little square jumping over triangles. Well, we assume the square to be happy.](images/Week3_1.png)
 
@@ -208,7 +222,11 @@ void OnTriggerEnter2D (Collider2D collider)
 
 ### Checkpoint! Save, commit and push your work now.
 
+<<<<<<< Updated upstream
 ## Step 5 – More complex jumps (30 min)
+=======
+## Step 4 – More complex jumps
+>>>>>>> Stashed changes
 
 The jump we've created is very "floaty"! Let's add some nuance to our state machine to make the jump feel better. These jumps can be a little bit tricky to implement. As we move throug the three extra states we are going to add, try working them out on pen-and-paper. Always keep paper and a pen next to you when programming. Sketching things out on paper before writing code will help a LOT.
 
@@ -240,5 +258,6 @@ Let's vary the size of the obstacles to challenge the player. When a new obstacl
 ### To receive full marks, show your tutor:
 
 * Your completed state machine, including your diagram/notes!
-* How you've modified the jump and what kind of feeling you were going for (you don't need to have achieved this, this isn't a design class).
-* Your randomised triangle sizes.
+* Your tunable parameters in the inspector, and the kind of jump feeling you were going for (you don't need to have achieved this, just made a start!).
+* Your spawner and destroyer.
+* Your randomised triangle sizes or movement speeds.
