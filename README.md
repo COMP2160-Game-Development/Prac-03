@@ -125,11 +125,11 @@ Once you've got a good jump, you should have a bit of an idea as to what the min
 ### Adding a gamepad
 Spacebars are cool and all, but gamepads are where it's at. You will be provided a gamepad by your demonstrator (ask for one if not). Plug it into your computer, then edit your InputActionsAsset to have Gamepad support. First, open the InputActionsAsset and select the Jump Action. Then, press the "+" symbol to the right and select "Add Binding". This will allow you to add an additional binding to this action.
 
-![](images/Week3_inputmapping1.png)
+![An image showing the "add binding" option for input mapping.](images/Week3_inputmapping1.png)
 
 Once the binding is added, set it to the South Button on the Gamepad (or something else) by navigating to **Gamepad > South Button**. Make sure the asset is saved, and test this out. Having multiple inputs is often good for accessibility, and allows you to target other platforms.
 
-![](images/Week3_inputmapping2.png)
+![An image showing the InputActionsAsset, and the addition of a gamepad button press fro jumping.](images/Week3_inputmapping2.png)
 
 ## Checkpoint! Save, commit and push your work now.
 
@@ -235,12 +235,12 @@ void OnTriggerEnter2D (Collider2D collider)
 The jump we've created is very "floaty"! Let's add some nuance to our state machine to make the jump feel better. These jumps can be a little bit tricky to implement. As we move throug the three extra states we are going to add, try working them out on pen-and-paper. Always keep paper and a pen next to you when programming. Sketching things out on paper before writing code will help a LOT.
 
 ### Hold to jump higher
-We want to allow the player to jump higher depending on how long they hold the jump button down. This can be achieved by having a stage at the beginning of the jump in which the player rises at a constant speed until either they release the jump button, or the timer runs out (to prevent them going up forever).
+We want the player to jump higher depending on how long they hold the jump button down. This can be achieved by having a stage at the beginning of the jump in which the player rises at a constant speed until either they release the jump button, or the timer runs out (to prevent them going up forever).
 
 Think about how you'd achieve this and sketch it out in your state machine drawing.
 
 ### Capping the fall rate
-If we jump very high, we will end up coming down very quickly. Usually we want to cap out the falling speed at some maximum value, to make sure falling isn’t uncontrollably fast. We can do this by adding an extra state to our state machine. When the falling velocity reaches terminal velocity, we can enter a new state in which gravity is no longer applied.
+If we jump very high, we will come down very quickly. Usually we want to cap out the falling speed at some maximum value, to make sure falling isn’t uncontrollably fast. We can do this by adding an extra state to our state machine. When the falling velocity reaches terminal velocity, we enter a new state in which gravity is not applied.
 
 Think about how you'd achieve this and add it to your state machine drawing.
 
@@ -251,9 +251,6 @@ Think about how you'd achieve this and add it to your state machine drawing.
 
 Using your sketch and notes as a guide, implement these three states. Do so one at a time, and remember to test as you go.
 
-### Game Feel
-You now have a number of different variables and states that control your player’s jump. As any platformer player knows, each game’s jump tends to feel different. Take some time to tune the parameters of your jump to get something you like. Do you want a floaty jump (slow rise and fall), or something more heavy (slow rise, fast fall)? Maybe a “jetback” like feeling (fast rise, slow fall)? See what you can come up with, and whether you need to introduce new paramters to achieve this.
-
 ### Vary triangle size
 Let's vary the size of the obstacles to challenge the player. When a new obstacle is spawned, scale it to a random range. Check the [Transform documentation](https://docs.unity3d.com/ScriptReference/Transform.html) for some clues.
 
@@ -262,6 +259,14 @@ Let's vary the size of the obstacles to challenge the player. When a new obstacl
 ### To receive full marks, show your tutor:
 
 * Your completed state machine, including your diagram/notes!
-* Your tunable parameters in the inspector, and the kind of jump feeling you were going for (you don't need to have achieved this, just made a start!).
+* Your tunable parameters in the inspector, and how they influence your jump.
 * Your spawner and destroyer.
-* Your randomised triangle sizes or movement speeds.    
+* Your randomised triangle sizes.    
+
+## Bonus: Juice and Effects
+
+If you finish early, here are a few things you can experiment with:
+
+* Add a rotation (what axis?) on your player sprite so they spin in the air when they jump.
+* Add a [line-renderer](https://docs.unity3d.com/Manual/class-LineRenderer.html) to the square to give a sense of motion.
+* Add large, slow moving triangles that are a different colour and deal no damage to the player that spawn behind the player and obstacles. This will give a sense of depth and is a form of [parallax scrolling](https://www.youtube.com/watch?v=piaQBAkqzhs).
