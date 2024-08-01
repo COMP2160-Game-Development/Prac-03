@@ -72,13 +72,13 @@ void Update()
 }
 ```
 
-The player should start in the OnGround state, so its speed should be zero. First, set the state in the Start() method:
+The player should start in the `OnGround` state, so its speed should be zero. First, set the state in the Start() method:
 
 ```
 jumpState = JumpState.OnGround;
 ```
 
-Then, there are two things we need to add to our OnGround state: we need to set the speed variable, and figure out how to transition from OnGround to Jumping. We'll let you take care of the former. 
+Then, there are two things we need to add to our `OnGround` state: we need to set the speed variable, and figure out how to transition from `OnGround` to `Jumping`. We'll let you take care of the former. 
 
 For jumping itself, we need to decide if we want to take an event-driven or polling approach to handling inputs here. There is no exact right answer, but generally speaking, if we are using explicit state machines we want to handle our transitions inside of them as much as possible. An event-driven approach would necessitate, well, events. So, we're going to use polling here.
 
@@ -164,32 +164,21 @@ We then want to ensure the following:
 
 There's a couple of ways to achieve this. Have a look at the [Unity Documentation for Instantiate()](https://docs.unity3d.com/ScriptReference/Object.Instantiate.html) to get some ideas. Is it better to do this as a single method call, or through multiple lines of code? What might be some tradeoffs? Hint: if you don't want to mess with rotation, setting it to [Quaternion.identity](https://docs.unity3d.com/ScriptReference/Quaternion-identity.html) is a pretty good idea).
 
-If you are having trouble figuring out what everything does, that's ok. Call over your demonstrator.
-
 ### Timely triangles
 We want our triangles to spawn regularly over the game, with a set interval between each one.
 
-To achieve this spawning, we need to add a few variables. First, declare a paramater to set the time delay between triangle spawns. You'll also want a private timer variable which will count down between triangle spawns:
+To achieve this spawning, we need a few variables. First, declare a paramater to set the time delay between triangle spawns. You'll also want a private timer variable which will count down between triangle spawns:
 
 ```
 [SerializeField] private float timeDelay;
 private float timer;
 ```
 
-We will use `Time.deltaTime` to reduce our timer every frame, then spawn a triangle and set it back to `timeDelay` when it hits zero.
-
-First, we want to set our `timer` to whatever value `timeDelay` is. What method does this go in?
-
-```
-timer = timeDelay;
-```
-
 Your job is to now implement the next few steps in code. Call over your demonstrator if you get stuck:
 
+* First, we want to set our `timer` to whatever value `timeDelay` is. What method does this go in?
 * In our Update method, we reduce `timer` by Time.deltaTime at the beginning of each frame. Try this yourself, and don't forget to print it to the console to check what you are doing is correct.
-
 * Then, we want to call our `Spawn()` method once the timer reaches zero. How might you use an if statement in your `Update()` method to achieve this?
-
 * The last step is to add code into our `Spawn()` method so the timer resets when it hits zero.
 
 > Optional: <br>For a bit more modulation, use ```RandomRange()``` to have the time between spawns vary. Make the min and max timers paramaters that can be tuned in the Inspector.
