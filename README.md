@@ -98,7 +98,7 @@ case JumpState.OnGround:
 With what we've just done in mind, it's time to write the Jumping state. While in the Jumping state, the speed field should be updated every frame to adjust for gravity: 
 
 ```
-speed += gravity * Time.deltaTime;
+speed -= gravity * Time.deltaTime;
 ```
 
 We then need to figure out how we'll transition from Jumping back to OnGround. We want this to occur when the player reaches the ground, and reset their position to stop them from falling through the floor. Add the following code to your Jumping state:
